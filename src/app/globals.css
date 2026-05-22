@@ -1,26 +1,145 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Tonal Layer Palette (Architectural Materials) */
+  --color-background: #faf9f7;
+  --color-surface: #faf9f7;
+  --color-surface-dim: #dadad8;
+  --color-surface-bright: #faf9f7;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f4f3f1;
+  --color-surface-container: #efeeec;
+  --color-surface-container-high: #e9e8e6;
+  --color-surface-container-highest: #e3e2e0;
+  --color-on-surface: #1a1c1b;
+  --color-on-surface-variant: #444748;
+  --color-inverse-surface: #2f3130;
+  --color-inverse-on-surface: #f1f1ef;
+  --color-outline: #747878;
+  --color-outline-variant: #c4c7c7;
+  
+  /* Brand Archetype Colors */
+  --color-primary: #1a1c1b; /* Charcoal (#1A1A1A) */
+  --color-on-primary: #ffffff;
+  --color-secondary: #625e54;
+  --color-secondary-container: #e9e2d4;
+  --color-on-secondary-container: #696459;
+  --color-tertiary: #000000;
+  --color-tertiary-container: #2c1600;
+  --color-on-tertiary-container: #a57c52; /* Warm Accent (Wood/Brass) */
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+
+  /* Font Families */
+  --font-serif: var(--font-eb-garamond), serif;
+  --font-sans: var(--font-hanken-grotesk), sans-serif;
+
+  /* Font Sizes */
+  --size-body-lg: 18px;
+  --size-body-md: 16px;
+  --size-label-caps: 12px;
+  --size-headline-display: 64px;
+  --size-headline-lg: 48px;
+  --size-headline-lg-mobile: 32px;
+  --size-headline-md: 32px;
+
+  /* Spacing */
+  --spacing-section-gap: 128px;
+  --spacing-margin-desktop: 64px;
+  --spacing-margin-mobile: 24px;
+  --spacing-gutter: 32px;
+  --spacing-unit: 8px;
+
+  /* Border Radius - Strictly Sharp */
+  --radius-DEFAULT: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-full: 9999px;
+  
+  /* Max Widths */
+  --width-container-max: 1280px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    @apply bg-surface text-on-surface font-sans antialiased selection:bg-on-tertiary-container selection:text-white;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Custom premium scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #faf9f7;
+}
+::-webkit-scrollbar-thumb {
+  background: #1a1c1b;
+}
+
+/* Custom shadows */
+.canvas-shadow {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+/* Custom input underlines */
+.underlined-input {
+  border-bottom: 1px solid #1a1c1b;
+}
+.underlined-input:focus {
+  outline: none;
+  border-bottom: 2px solid #1a1c1b;
+}
+
+/* Helper typography utilities to map code.html */
+@utility font-body-lg {
+  font-family: var(--font-sans);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+@utility font-body-md {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+@utility font-label-caps {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+@utility font-headline-display {
+  font-family: var(--font-serif);
+  font-size: 64px;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+@utility font-headline-lg {
+  font-family: var(--font-serif);
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+@utility font-headline-lg-mobile {
+  font-family: var(--font-serif);
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+@utility font-headline-md {
+  font-family: var(--font-serif);
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1.3;
 }
