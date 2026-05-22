@@ -1,145 +1,239 @@
 @import "tailwindcss";
 
 @theme {
-  /* Tonal Layer Palette (Architectural Materials) */
-  --color-background: #faf9f7;
-  --color-surface: #faf9f7;
-  --color-surface-dim: #dadad8;
-  --color-surface-bright: #faf9f7;
+  /* Warm architectural palette */
+  --color-background: #f7f5f1;
+  --color-surface: #f7f5f1;
+  --color-surface-dim: #d8d2c8;
+  --color-surface-bright: #fcfaf7;
   --color-surface-container-lowest: #ffffff;
-  --color-surface-container-low: #f4f3f1;
-  --color-surface-container: #efeeec;
-  --color-surface-container-high: #e9e8e6;
-  --color-surface-container-highest: #e3e2e0;
-  --color-on-surface: #1a1c1b;
-  --color-on-surface-variant: #444748;
-  --color-inverse-surface: #2f3130;
-  --color-inverse-on-surface: #f1f1ef;
-  --color-outline: #747878;
-  --color-outline-variant: #c4c7c7;
-  
-  /* Brand Archetype Colors */
-  --color-primary: #1a1c1b; /* Charcoal (#1A1A1A) */
-  --color-on-primary: #ffffff;
-  --color-secondary: #625e54;
-  --color-secondary-container: #e9e2d4;
-  --color-on-secondary-container: #696459;
-  --color-tertiary: #000000;
-  --color-tertiary-container: #2c1600;
-  --color-on-tertiary-container: #a57c52; /* Warm Accent (Wood/Brass) */
+  --color-surface-container-low: #f3f0ea;
+  --color-surface-container: #ebe6de;
+  --color-surface-container-high: #e4dfd6;
+  --color-surface-container-highest: #dbd5cb;
+  --color-on-surface: #1c1a18;
+  --color-on-surface-variant: #5c5852;
+  --color-inverse-surface: #2a2826;
+  --color-inverse-on-surface: #f3f0ea;
+  --color-outline: #8a8580;
+  --color-outline-variant: #cfc9be;
+
+  /* Brand */
+  --color-primary: #1c1a18;
+  --color-on-primary: #faf8f5;
+  --color-secondary: #6b645c;
+  --color-secondary-container: #ebe3d6;
+  --color-on-secondary-container: #5a534c;
+  --color-tertiary: #2c241c;
+  --color-tertiary-container: #3d2e1f;
+  --color-on-tertiary-container: #a67c52;
+  --color-accent: #9a7352;
+  --color-accent-soft: #e8dfd4;
+  --color-accent-muted: #c4a882;
   --color-error: #ba1a1a;
   --color-on-error: #ffffff;
 
-  /* Font Families */
-  --font-serif: var(--font-eb-garamond), serif;
-  --font-sans: var(--font-hanken-grotesk), sans-serif;
+  /* Typography */
+  --font-serif: var(--font-cormorant), "Georgia", serif;
+  --font-sans: var(--font-dm-sans), system-ui, sans-serif;
 
-  /* Font Sizes */
-  --size-body-lg: 18px;
-  --size-body-md: 16px;
-  --size-label-caps: 12px;
-  --size-headline-display: 64px;
-  --size-headline-lg: 48px;
-  --size-headline-lg-mobile: 32px;
-  --size-headline-md: 32px;
+  --size-body-lg: clamp(1.0625rem, 0.5vw + 1rem, 1.125rem);
+  --size-body-md: clamp(0.9375rem, 0.25vw + 0.9rem, 1rem);
+  --size-body-sm: 0.875rem;
+  --size-label-caps: 0.6875rem;
+  --size-eyebrow: 0.75rem;
+  --size-headline-display: clamp(2.5rem, 4.5vw + 1.25rem, 4.25rem);
+  --size-headline-lg: clamp(1.875rem, 2.5vw + 1rem, 2.75rem);
+  --size-headline-md: clamp(1.375rem, 1.5vw + 0.875rem, 1.75rem);
+  --size-headline-sm: clamp(1.125rem, 1vw + 0.75rem, 1.375rem);
 
-  /* Spacing */
-  --spacing-section-gap: 128px;
-  --spacing-margin-desktop: 64px;
-  --spacing-margin-mobile: 24px;
-  --spacing-gutter: 32px;
+  /* Spacing rhythm */
+  --spacing-section-gap: clamp(4.5rem, 9vw, 7rem);
+  --spacing-section-sm: clamp(3.5rem, 7vw, 5.5rem);
+  --spacing-block: clamp(1.5rem, 3vw, 2.5rem);
+  --spacing-stack-sm: 0.75rem;
+  --spacing-stack: 1.25rem;
+  --spacing-stack-lg: 2rem;
+  --spacing-margin-desktop: clamp(1.5rem, 4vw, 4rem);
+  --spacing-margin-mobile: 1.25rem;
+  --spacing-gutter: clamp(1.25rem, 2.5vw, 2rem);
   --spacing-unit: 8px;
 
-  /* Border Radius - Strictly Sharp */
   --radius-DEFAULT: 0px;
   --radius-lg: 0px;
   --radius-xl: 0px;
   --radius-full: 9999px;
-  
-  /* Max Widths */
-  --width-container-max: 1280px;
+  --width-container-max: 1200px;
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+
   body {
-    @apply bg-surface text-on-surface font-sans antialiased selection:bg-on-tertiary-container selection:text-white;
+    @apply bg-surface text-on-surface font-sans antialiased;
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-serif font-normal text-primary;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
   }
 }
 
-/* Custom premium scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: #faf9f7;
+  background: var(--color-surface);
 }
 ::-webkit-scrollbar-thumb {
-  background: #1a1c1b;
+  background: var(--color-outline);
 }
 
-/* Custom shadows */
+/* Elevation */
 .canvas-shadow {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 2px 16px rgba(28, 26, 24, 0.05), 0 8px 32px rgba(28, 26, 24, 0.04);
 }
 
-/* Custom input underlines */
+.interactive-lift {
+  transition: box-shadow 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.interactive-lift:hover {
+  box-shadow: 0 8px 28px rgba(28, 26, 24, 0.08), 0 20px 48px rgba(28, 26, 24, 0.06);
+}
+
+/* Hero frame */
+.hero-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0.75rem;
+  border: 1px solid rgba(154, 115, 82, 0.2);
+  pointer-events: none;
+  z-index: 2;
+}
+@media (min-width: 768px) {
+  .hero-frame::before {
+    inset: 1rem;
+  }
+}
+
+/* Inputs */
 .underlined-input {
-  border-bottom: 1px solid #1a1c1b;
+  border-bottom: 1px solid rgba(28, 26, 24, 0.22);
+  transition: border-color 0.35s ease;
 }
 .underlined-input:focus {
   outline: none;
-  border-bottom: 2px solid #1a1c1b;
+  border-bottom-color: var(--color-accent);
 }
 
-/* Helper typography utilities to map code.html */
+/* Image motion */
+.image-reveal {
+  transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+.group:hover .image-reveal,
+.group:focus-within .image-reveal {
+  transform: scale(1.03);
+}
+
+/* Section subtle gradient washes */
+.tone-muted {
+  background: linear-gradient(180deg, var(--color-surface-container-low) 0%, var(--color-surface) 100%);
+}
+.tone-elevated {
+  background: linear-gradient(180deg, var(--color-surface-container) 0%, var(--color-surface-container-low) 100%);
+}
+.tone-inverse {
+  background: linear-gradient(165deg, #2a2826 0%, #1c1a18 55%, #242220 100%);
+}
+
+/* Typography utilities */
 @utility font-body-lg {
   font-family: var(--font-sans);
-  font-size: 18px;
+  font-size: var(--size-body-lg);
   font-weight: 400;
-  line-height: 1.6;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
 }
 
 @utility font-body-md {
   font-family: var(--font-sans);
-  font-size: 16px;
+  font-size: var(--size-body-md);
+  font-weight: 400;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+}
+
+@utility font-body-sm {
+  font-family: var(--font-sans);
+  font-size: var(--size-body-sm);
   font-weight: 400;
   line-height: 1.6;
 }
 
 @utility font-label-caps {
   font-family: var(--font-sans);
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 1;
-  letter-spacing: 0.1em;
+  font-size: var(--size-label-caps);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+@utility font-eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--size-eyebrow);
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 
 @utility font-headline-display {
   font-family: var(--font-serif);
-  font-size: 64px;
+  font-size: var(--size-headline-display);
   font-weight: 400;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
 }
 
 @utility font-headline-lg {
   font-family: var(--font-serif);
-  font-size: 48px;
+  font-size: var(--size-headline-lg);
   font-weight: 400;
-  line-height: 1.2;
-}
-
-@utility font-headline-lg-mobile {
-  font-family: var(--font-serif);
-  font-size: 32px;
-  font-weight: 400;
-  line-height: 1.2;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
 }
 
 @utility font-headline-md {
   font-family: var(--font-serif);
-  font-size: 32px;
+  font-size: var(--size-headline-md);
   font-weight: 400;
-  line-height: 1.3;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+}
+
+@utility font-headline-sm {
+  font-family: var(--font-serif);
+  font-size: var(--size-headline-sm);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+@utility text-accent {
+  color: var(--color-accent);
+}
+
+@utility text-prose {
+  color: var(--color-on-surface-variant);
 }

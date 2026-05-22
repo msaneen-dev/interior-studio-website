@@ -1,195 +1,156 @@
 "use client";
 
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { contactData } from "@/data/content";
+import { motion } from "framer-motion";
+import { contactData, contactSectionData } from "@/data/content";
+import { easeLuxury, stagger } from "@/lib/motion";
+import { studioTheme } from "@/lib/studio-theme";
+import { Container } from "@/components/ui/Container";
+import { Icon } from "@/components/Icon";
+import { ContactForm } from "@/components/contact/ContactForm";
 
-export const Contact: React.FC = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitSuccess, setSubmitSuccess] = useState(false);
+const contactItems = [
+  { label: "Phone", value: contactData.phone, iconName: "Phone" },
+  { label: "Email", value: contactData.email, iconName: "Mail" },
+  { label: "Location", value: contactData.address, iconName: "MapPin" },
+];
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formData.name || !formData.email || !formData.message) return;
-
-    setIsSubmitting(true);
-    
-    // Simulate premium API call transition
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitSuccess(true);
-      setFormData({ name: "", email: "", message: "" });
-    }, 1500);
-  };
-
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { id, value } = e.target;
-    setFormData((prev) => ({ ...prev, [id]: value }));
-  };
-
+export function Contact() {
   return (
     <section
       id="contact"
-      className="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container-high"
+      className="relative overflow-hidden py-20 sm:py-24 lg:py-28"
+      style={{ backgroundColor: studioTheme.bg }}
     >
-      <div className="max-w-container-max mx-auto grid grid-cols-12 gap-y-12 md:gap-gutter">
-        {/* Contact information details */}
-        <div className="col-span-12 md:col-span-5 space-y-12 pr-0 md:pr-12">
-          <div>
-            <span className="font-label-caps text-label-caps text-on-tertiary-container tracking-widest block mb-4">
-              INQUIRE
-            </span>
-            <h2 className="font-serif text-headline-lg text-primary leading-tight">
-              Let's create something timeless.
-            </h2>
-          </div>
-
-          <div className="space-y-8">
-            <div>
-              <p className="font-label-caps text-[10px] text-on-surface-variant tracking-wider mb-2">
-                EMAIL US
-              </p>
-              <p className="font-serif text-[24px] text-primary">{contactData.email}</p>
-            </div>
-            <div>
-              <p className="font-label-caps text-[10px] text-on-surface-variant tracking-wider mb-2">
-                VISIT US
-              </p>
-              <p className="font-serif text-[24px] text-primary">
-                {contactData.address}
-              </p>
-            </div>
-            <div>
-              <p className="font-label-caps text-[10px] text-on-surface-variant tracking-wider mb-2">
-                CALL US
-              </p>
-              <p className="font-serif text-[24px] text-primary">{contactData.phone}</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Contact form panel */}
-        <div className="col-span-12 md:col-span-7 bg-surface p-8 md:p-12 canvas-shadow relative min-h-[460px] flex items-center">
-          <AnimatePresence mode="wait">
-            {!submitSuccess ? (
-              <motion.form
-                key="contact-form"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onSubmit={handleSubmit}
-                className="space-y-10 w-full"
-              >
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                  <div className="flex flex-col gap-2">
-                    <label
-                      className="font-label-caps text-[10px] text-on-surface-variant uppercase tracking-wider"
-                      htmlFor="name"
-                    >
-                      Your Name
-                    </label>
-                    <input
-                      required
-                      className="underlined-input bg-transparent py-2 px-0 border-0 rounded-none focus:ring-0 text-primary font-sans placeholder:text-outline-variant"
-                      id="name"
-                      placeholder="John Doe"
-                      type="text"
-                      value={formData.name}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <label
-                      className="font-label-caps text-[10px] text-on-surface-variant uppercase tracking-wider"
-                      htmlFor="email"
-                    >
-                      Email Address
-                    </label>
-                    <input
-                      required
-                      className="underlined-input bg-transparent py-2 px-0 border-0 rounded-none focus:ring-0 text-primary font-sans placeholder:text-outline-variant"
-                      id="email"
-                      placeholder="john@example.com"
-                      type="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-2">
-                  <label
-                    className="font-label-caps text-[10px] text-on-surface-variant uppercase tracking-wider"
-                    htmlFor="message"
-                  >
-                    Project Details
-                  </label>
-                  <textarea
-                    required
-                    className="underlined-input bg-transparent py-2 px-0 border-0 rounded-none focus:ring-0 text-primary font-sans placeholder:text-outline-variant resize-none"
-                    id="message"
-                    placeholder="Tell us about your project..."
-                    rows={4}
-                    value={formData.message}
-                    onChange={handleInputChange}
-                  ></textarea>
-                </div>
-
-                <button
-                  disabled={isSubmitting}
-                  className="w-full bg-primary text-on-primary py-5 font-label-caps text-label-caps tracking-widest hover:bg-on-primary-container transition-all active:opacity-70 disabled:opacity-50 flex items-center justify-center cursor-pointer"
-                  type="submit"
-                >
-                  {isSubmitting ? "SENDING..." : "SEND INQUIRY"}
-                </button>
-              </motion.form>
-            ) : (
-              <motion.div
-                key="success-message"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5 }}
-                className="text-center py-12 space-y-6 w-full"
-              >
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-secondary-container text-on-secondary-container mb-4">
-                  <svg
-                    className="w-8 h-8"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                </div>
-                <h3 className="font-serif text-3xl text-primary">Inquiry Sent.</h3>
-                <p className="font-sans text-body-md text-on-surface-variant max-w-sm mx-auto">
-                  Thank you for reaching out. A design consultant will review
-                  your project details and respond within 24 hours.
-                </p>
-                <button
-                  onClick={() => setSubmitSuccess(false)}
-                  className="inline-block border-b border-primary pb-1 font-label-caps text-label-caps text-primary hover:opacity-75 transition-all mt-4"
-                >
-                  SUBMIT ANOTHER INQUIRY
-                </button>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
+      <div className="pointer-events-none absolute inset-0" aria-hidden>
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+          }}
+        />
+        <svg
+          className="absolute -left-[15%] top-[20%] h-[60%] w-[50%] opacity-[0.05]"
+          viewBox="0 0 400 400"
+          fill="none"
+        >
+          <circle cx="200" cy="200" r="170" stroke={studioTheme.gold} strokeWidth="0.5" />
+          <circle cx="200" cy="200" r="130" stroke={studioTheme.gold} strokeWidth="0.5" />
+        </svg>
       </div>
+
+      <Container className="relative z-10">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-6 xl:gap-8">
+          {/* Left — info */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.8, ease: easeLuxury }}
+            className="flex flex-col gap-8 lg:col-span-4"
+          >
+            <div>
+              <span
+                className="mb-5 inline-flex items-center gap-3 font-label-caps text-[0.65rem] tracking-[0.22em] sm:text-xs"
+                style={{ color: studioTheme.gold }}
+              >
+                <span className="h-px w-10" style={{ backgroundColor: studioTheme.gold }} />
+                {contactSectionData.eyebrow}
+                <span className="opacity-60">—</span>
+              </span>
+              <h2
+                className="font-serif font-medium leading-[1.1] tracking-[-0.02em] text-[clamp(1.75rem,4vw,2.75rem)]"
+                style={{ color: studioTheme.text }}
+              >
+                {contactSectionData.headline[0]}{" "}
+                <span className="italic" style={{ color: studioTheme.gold }}>
+                  {contactSectionData.headline[1]}
+                </span>
+              </h2>
+              <p
+                className="mt-5 font-sans text-[0.9375rem] leading-[1.75] sm:text-base"
+                style={{ color: studioTheme.textMuted }}
+              >
+                {contactSectionData.description}
+              </p>
+            </div>
+
+            <div className="space-y-6">
+              {contactItems.map((item, i) => (
+                <motion.div
+                  key={item.label}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: stagger(i, 0.08), ease: easeLuxury }}
+                  className="flex gap-4"
+                >
+                  <div
+                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border"
+                    style={{ borderColor: studioTheme.border }}
+                  >
+                    <Icon
+                      name={item.iconName}
+                      className="h-4 w-4"
+                      style={{ color: studioTheme.gold }}
+                      strokeWidth={1.25}
+                    />
+                  </div>
+                  <div>
+                    <p
+                      className="mb-1 font-label-caps text-[0.625rem] tracking-[0.14em]"
+                      style={{ color: studioTheme.gold }}
+                    >
+                      {item.label}
+                    </p>
+                    <p
+                      className="font-sans text-sm sm:text-base"
+                      style={{ color: studioTheme.text }}
+                    >
+                      {item.value}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Center — form */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.8, delay: 0.1, ease: easeLuxury }}
+            className="lg:col-span-4"
+          >
+            <ContactForm />
+          </motion.div>
+
+          {/* Right — image */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.8, delay: 0.2, ease: easeLuxury }}
+            className="relative min-h-[280px] overflow-hidden lg:col-span-4 lg:min-h-full"
+            style={{
+              boxShadow: "0 16px 48px rgba(0,0,0,0.4)",
+              border: `1px solid ${studioTheme.borderSubtle}`,
+            }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={contactSectionData.image.src}
+              alt={contactSectionData.image.alt}
+              className="absolute inset-0 h-full w-full object-cover"
+              loading="lazy"
+            />
+            <div
+              className="pointer-events-none absolute inset-0 bg-gradient-to-l from-[#0a0908]/40 via-transparent to-transparent lg:from-[#0a0908]/60"
+              aria-hidden
+            />
+          </motion.div>
+        </div>
+      </Container>
     </section>
   );
-};
+}

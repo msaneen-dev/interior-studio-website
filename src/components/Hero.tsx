@@ -1,93 +1,155 @@
 "use client";
 
-import React from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
+import { heroData } from "@/data/content";
+import { easeLuxury } from "@/lib/motion";
+import { Container } from "@/components/ui/Container";
+import { Icon } from "@/components/Icon";
+import { HeroStats } from "@/components/hero/HeroStats";
+import { HeroVisual } from "@/components/hero/HeroVisual";
+import { HeroScrollCue } from "@/components/hero/HeroScrollCue";
+import { heroTheme } from "@/components/hero/hero-theme";
 
-export const Hero: React.FC = () => {
+const container = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.09, delayChildren: 0.12 },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 22 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, ease: easeLuxury },
+  },
+};
+
+export function Hero() {
   return (
     <section
       id="home"
-      className="pt-32 pb-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto min-h-screen flex items-center"
+      className="relative min-h-svh overflow-hidden lg:h-screen lg:min-h-screen"
+      style={{ backgroundColor: heroTheme.bg }}
     >
-      <div className="grid grid-cols-12 gap-y-12 md:gap-gutter w-full items-center">
-        {/* Editorial Text Column */}
-        <div className="col-span-12 md:col-span-6 flex flex-col justify-center space-y-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
-            <h1 className="font-serif text-headline-display text-primary leading-[1.1] tracking-tighter">
-              Redefining the
-              <br />
-              Art of Living
-            </h1>
-          </motion.div>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-            className="font-sans text-body-lg text-on-surface-variant max-w-md"
-          >
-            We blend structural precision with domestic warmth to create spaces
-            that are as functional as they are poetic.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-            className="flex flex-col sm:flex-row gap-4 pt-4"
-          >
-            <a
-              href="#contact"
-              className="bg-primary text-center text-on-primary px-10 py-4 font-label-caps text-label-caps hover:bg-on-primary-container transition-all"
-            >
-              START A PROJECT
-            </a>
-            <a
-              href="#projects"
-              className="border border-primary text-center text-primary px-10 py-4 font-label-caps text-label-caps hover:bg-surface-container transition-all"
-            >
-              OUR WORK
-            </a>
-          </motion.div>
-        </div>
-
-        {/* Visual Focus Column */}
-        <div className="col-span-12 md:col-span-6 relative h-[450px] md:h-[600px] w-full">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
-            className="absolute inset-0 bg-surface-container overflow-hidden group cursor-crosshair"
-          >
-            {/* Overlay showing hover space for 3D elements */}
-            <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent z-10 pointer-events-none transition-opacity group-hover:opacity-40" />
-            
-            <img
-              className="w-full h-full object-cover transition-transform duration-[2000ms] ease-out group-hover:scale-105"
-              alt="A sophisticated architectural interior"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMBZj1QJhhJYPqTYdV1jJnfJDoo1goRPjzGwOhNjQ_SigYL8PyNLguLh3LEeG37YPF25UXX1_yKfu3RFkYASV-rbs4jWpIUnRo9EM3pUJ-QRv-a5hUHipM8KAyQJ9o6p0jwt82p3DzhkRKdw5ZDFbGyWgHQRrs-WpMarKlXuNRA6qnCGRXe1hwqgLk-GQCDluMAthI26ca1sc-8ma8msnSwfczrpmZpUMOWrwG7-IEFKr0flPY-c4uP2GLZrQ6YjvkrWTKSKhNVh3O"
-            />
-          </motion.div>
-
-          {/* ESTABLISHED MCMXCVIII Badge */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
-            className="absolute -bottom-6 -left-6 w-40 h-40 bg-primary p-6 flex items-center justify-center text-on-primary text-center hidden lg:flex canvas-shadow"
-          >
-            <p className="font-label-caps text-[10px] leading-relaxed tracking-widest">
-              ESTABLISHED
-              <br />
-              MCMXCVIII
-            </p>
-          </motion.div>
-        </div>
+      {/* Ambient gold curves */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+        <svg
+          className="absolute -left-[20%] top-[10%] h-[80%] w-[70%] opacity-[0.07]"
+          viewBox="0 0 400 400"
+          fill="none"
+        >
+          <circle cx="200" cy="200" r="180" stroke={heroTheme.gold} strokeWidth="0.5" />
+          <circle cx="200" cy="200" r="140" stroke={heroTheme.gold} strokeWidth="0.5" />
+          <circle cx="200" cy="200" r="100" stroke={heroTheme.gold} strokeWidth="0.5" />
+        </svg>
+        <div
+          className="absolute right-0 top-1/4 h-[50%] w-[40%] opacity-30"
+          style={{
+            background: `radial-gradient(ellipse at center, ${heroTheme.gold}15 0%, transparent 70%)`,
+          }}
+        />
+        <motion.div
+          animate={{ opacity: [0.04, 0.08, 0.04] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute left-[5%] top-[20%] h-px w-32"
+          style={{ backgroundColor: heroTheme.gold }}
+        />
       </div>
+
+      <Container className="relative z-10 flex min-h-svh flex-col justify-center pb-8 pt-24 sm:pt-28 lg:min-h-screen lg:pb-16 lg:pt-28">
+        <div className="grid flex-1 grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-14 xl:gap-20">
+          {/* Left — copy */}
+          <motion.div
+            variants={container}
+            initial="hidden"
+            animate="visible"
+            className="flex flex-col gap-5 sm:gap-6 lg:max-w-[540px] lg:py-4"
+          >
+            <motion.span
+              variants={item}
+              className="inline-flex items-center gap-3 font-label-caps text-[0.65rem] tracking-[0.22em] sm:text-xs"
+              style={{ color: heroTheme.gold }}
+            >
+              <span className="h-px w-10" style={{ backgroundColor: heroTheme.gold }} />
+              {heroData.eyebrow}
+            </motion.span>
+
+            <motion.h1
+              variants={item}
+              className="font-serif font-medium leading-[1.05] tracking-[-0.03em] text-[clamp(2.125rem,7vw,3.5rem)] lg:text-[clamp(2.75rem,4vw,4.25rem)]"
+              style={{ color: heroTheme.text }}
+            >
+              <span className="block">{heroData.headline[0]}</span>
+              <span
+                className="mt-1 block font-normal italic lg:mt-2"
+                style={{ color: heroTheme.gold }}
+              >
+                {heroData.headline[1]}
+              </span>
+            </motion.h1>
+
+            <motion.p
+              variants={item}
+              className="max-w-md font-sans text-[0.9375rem] leading-[1.75] sm:text-base lg:text-[1.0625rem]"
+              style={{ color: heroTheme.textMuted }}
+            >
+              {heroData.description}
+            </motion.p>
+
+            <motion.div
+              variants={item}
+              className="flex w-full flex-col gap-3 sm:max-w-lg sm:flex-row sm:gap-4"
+            >
+              <Link
+                href={heroData.primaryCta.href}
+                className="group inline-flex min-h-[48px] w-full items-center justify-center gap-2 px-8 font-label-caps text-[0.6875rem] tracking-[0.14em] transition-all duration-300 hover:brightness-110 sm:flex-1"
+                style={{
+                  backgroundColor: heroTheme.gold,
+                  color: heroTheme.bg,
+                }}
+              >
+                {heroData.primaryCta.label}
+                <Icon
+                  name="ArrowRight"
+                  className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5"
+                />
+              </Link>
+              <Link
+                href={heroData.secondaryCta.href}
+                className="inline-flex min-h-[48px] w-full items-center justify-center border px-8 font-label-caps text-[0.6875rem] tracking-[0.14em] transition-all duration-300 hover:bg-white/5 sm:flex-1"
+                style={{
+                  borderColor: heroTheme.border,
+                  color: heroTheme.text,
+                }}
+              >
+                {heroData.secondaryCta.label}
+              </Link>
+            </motion.div>
+
+            <motion.div variants={item}>
+              <HeroStats />
+            </motion.div>
+          </motion.div>
+
+          {/* Right — visual */}
+          <div className="relative w-full lg:h-full lg:min-h-[520px]">
+            <HeroVisual />
+          </div>
+        </div>
+      </Container>
+
+      <HeroScrollCue />
+
+      {/* Bottom gold line */}
+      <div
+        className="pointer-events-none absolute bottom-0 left-0 right-0 hidden h-px lg:block"
+        style={{ backgroundColor: heroTheme.border }}
+        aria-hidden
+      />
     </section>
   );
-};
+}

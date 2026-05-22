@@ -1,92 +1,198 @@
 "use client";
 
-import React from "react";
-import { navLinks } from "@/data/content";
+import { useState, type ReactNode } from "react";
+import { brand, contactData, footerSocialLinks, navLinks, servicesData } from "@/data/content";
+import { studioTheme } from "@/lib/studio-theme";
+import { Container } from "@/components/ui/Container";
+import { Icon } from "@/components/Icon";
 
-export const Footer: React.FC = () => {
-  const logoBase64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABAAAAAQACAYAAAB/HSuDAAAQAElEQVR4Aez9Bdx2TRuQ9T5uAxULcxvb7sAExcbuVuwNJiqIioqFSCiIqIiKhQ2KhYVBWCAGgoWNhd2B3c7/+d55v3mv9+q6rzju35p71po1a+KYOuecWev6/3zqLwIRiEAEIhCBCEQgAhGIQAQiEIFXJ/ApBcDLF3EZjEAEIhCBCEQgAhGIQAQiEIEIfEoBUCWIQAQiEIEIRCACEYhABCIQgQi8PIGRwXYADAgdEYhABCIQgQhEIAIRiEAEIhCBVyYgbykAUMhEIAIRiEAEIhCBCEQgAhGIQARel8DnnKUA+IyhfxGIQAQiEIEIRCACEYhABCIQgVcl8I18pQD4Bof+RyACEYhABCIQgQhEIAIRiEAEXpPAF7lKAfAFiKwIRCACEYhABCIQgQhEIAIRiMArEph5SgEwSWRHIAIRiEAEIhCBCEQgAhGIQARej8CXOUoB8CWKTiIQgQhEIAIRiEAEIhCBCEQgAq9G4Jv5SQHwTRadRSACEYhABCIQgQhEIAIRiEAEXovAkpsUAAuMTiMQgQhEIAIRiEAEIhCBCEQgAq9EYM1LCoCVRucRiEAEIhCBCEQgAhGIQAQiEIHXIfCVnKQA+AqOLiIQgQhEIAIRiEAEIhCBCEQgAq9C4Kv5SAHwVR5dRSACEYhABCIQgQhEIAIRiEAEXoPARi5SAGwA6TICEYhABCIQgQhEIAIRiEAEIvAKBDbzkAJgk0jXEYhABCIQgQhEIAIRiEAEIhCB5yfwtRykAPgakhwiEIEIRCACEYhABCIQgQhEIALPTuDr6U8B8HUmuUQgAhGIQAQiEIEIRCACEYhABJ6bwJbUpwDYAiWnCEQgAhGIQAQiEIEIRCACEYjAMxPYlvYUANuo5BaBCEQgAhGIQAQiEIEIRCACEXheAltTngJgK5YcIxCBCEQgAhGIQAQiEIEIRCACz0pge7pTAGznkmsEIhCBCEQgAhGIQAQiEIEIROA5CexIdQqAHWByjkAEIhCBCEQgAhGIQAQiEIEIPCOBXWlOAbCLTO4RiEAEIhCBCEQgAhGIQAQiEIHnI7AzxSkAdqLpRgQiEIEIRCACEYhABCIQgQhE4NkI7E5vCoDdbLoTgQhEIAIRiEAEIhCBCEQgAhF4LgJ7UpsCYA+cbkUgAhGIQAQiEIEIRCACEYhABJ6JwL60pgDYR6d7EYhABCIQgQhEIAIRiEAEIhCB5yGwN6UpAPbi6WYEIhCBCEQgAhGIQAQiEIEIROBZCOxPZwqA/Xy6G4EIRCACEYhABCIQgQhEIAIReA4CB1KZAuAAoG5HIAIRiEAEIhCBCEQgAhGIQASegcChNKYAOESo+xGIQAQiEIEIRCACEYhABCIQgccncDCFKQAOIspDBCIQgQhEIAIRiEAEIhCBCEQgAp8+fYrB3QkbALg78iKMQAQiEIEIRCACEYhABCIQgQcTSAFwfwbFGIEIRCACEYhABCIQgQhE4N0JfED+UwB8APaijEAEIhCBCEQgAhGIQAQiEIEPvH7PvfexTQEAPwAAAABJRU5ErkJggg==";
+function FooterColumn({
+  title,
+  children,
+}: {
+  title: string;
+  children: ReactNode;
+}) {
+  return (
+    <div className="space-y-4">
+      <h2
+        className="font-label-caps text-[0.625rem] tracking-[0.14em]"
+        style={{ color: studioTheme.gold }}
+      >
+        {title}
+      </h2>
+      {children}
+    </div>
+  );
+}
+
+export function Footer() {
+  const [email, setEmail] = useState("");
 
   return (
-    <footer className="bg-surface-container-highest">
-      {/* Footer Top Directory */}
-      <div className="flex flex-col md:flex-row justify-between items-start px-margin-mobile md:px-margin-desktop py-section-gap max-w-container-max mx-auto gap-12 md:gap-gutter">
-        
-        {/* Brand details */}
-        <div className="space-y-6 max-w-sm">
-          <div className="flex items-center gap-4">
-            <img
-              alt="STUDIO VERSE Logo"
-              className="h-10 w-auto"
-              src={logoBase64}
-            />
-            <span className="font-serif text-headline-md tracking-tighter text-primary">
-              STUDIO VERSE
-            </span>
-          </div>
-          <p className="font-sans text-body-md text-on-surface-variant leading-relaxed">
-            Timeless spaces designed with architectural precision and warm materiality.
-          </p>
-        </div>
-
-        {/* Directory grids */}
-        <div className="flex flex-wrap gap-x-24 gap-y-12">
-          {/* Quick links */}
-          <div className="space-y-4">
-            <h5 className="font-label-caps text-label-caps text-primary tracking-widest uppercase">
-              STUDIO
-            </h5>
-            <div className="flex flex-col gap-2 font-sans text-body-md text-on-surface-variant">
-              {navLinks.slice(0, 4).map((link) => (
+    <footer
+      id="footer"
+      className="border-t"
+      style={{
+        backgroundColor: studioTheme.bg,
+        borderColor: studioTheme.borderSubtle,
+      }}
+    >
+      <Container className="py-14 sm:py-16 lg:py-20">
+        <div className="grid grid-cols-2 gap-10 md:grid-cols-3 lg:grid-cols-5 lg:gap-8">
+          {/* Brand */}
+          <div className="col-span-2 space-y-5 md:col-span-3 lg:col-span-1">
+            <a href="#home" className="font-serif text-xl tracking-wide" style={{ color: studioTheme.gold }}>
+              {brand.name}
+            </a>
+            <p
+              className="max-w-xs font-sans text-[0.8125rem] leading-[1.7] sm:text-sm"
+              style={{ color: studioTheme.textMuted }}
+            >
+              {brand.footerTagline}
+            </p>
+            <div className="flex gap-3">
+              {footerSocialLinks.map((social) => (
                 <a
-                  key={link.label}
-                  className="hover:text-primary transition-colors inline-block"
-                  href={link.href}
+                  key={social.label}
+                  href={social.href}
+                  target={social.href.startsWith("mailto") ? undefined : "_blank"}
+                  rel="noreferrer"
+                  aria-label={social.label}
+                  className="flex h-9 w-9 items-center justify-center rounded-full border transition-all duration-300 hover:border-[rgba(201,169,98,0.5)] hover:bg-white/5"
+                  style={{ borderColor: studioTheme.border }}
                 >
-                  {link.label}
+                  <Icon
+                    name={social.iconName}
+                    className="h-4 w-4"
+                    style={{ color: studioTheme.gold }}
+                    strokeWidth={1.25}
+                  />
                 </a>
               ))}
             </div>
           </div>
 
-          {/* Social connections */}
-          <div className="space-y-4">
-            <h5 className="font-label-caps text-label-caps text-primary tracking-widest uppercase">
-              SOCIAL
-            </h5>
-            <div className="flex flex-col gap-2 font-sans text-body-md text-on-surface-variant">
-              <a
-                className="hover:text-primary transition-colors inline-block"
-                href="https://instagram.com"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Instagram
-              </a>
-              <a
-                className="hover:text-primary transition-colors inline-block"
-                href="https://pinterest.com"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Pinterest
-              </a>
-              <a
-                className="hover:text-primary transition-colors inline-block"
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noreferrer"
-              >
-                LinkedIn
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
+          {/* Quick links */}
+          <FooterColumn title="Quick Links">
+            <nav className="flex flex-col gap-2.5">
+              {navLinks.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  className="font-sans text-[0.8125rem] transition-colors duration-300 hover:text-[#c9a962] sm:text-sm"
+                  style={{ color: studioTheme.textMuted }}
+                >
+                  {link.label}
+                </a>
+              ))}
+            </nav>
+          </FooterColumn>
 
-      {/* Copyright footer bar */}
-      <div className="border-t border-outline-variant/30 px-margin-mobile md:px-margin-desktop py-8 max-w-container-max mx-auto text-center font-label-caps text-[10px] text-on-surface-variant tracking-widest">
-        &copy; {new Date().getFullYear()} STUDIO VERSE. ALL RIGHTS RESERVED.
+          {/* Services */}
+          <FooterColumn title="Services">
+            <nav className="flex flex-col gap-2.5">
+              {servicesData.map((service) => (
+                <a
+                  key={service.id}
+                  href="#services"
+                  className="font-sans text-[0.8125rem] transition-colors duration-300 hover:text-[#c9a962] sm:text-sm"
+                  style={{ color: studioTheme.textMuted }}
+                >
+                  {service.title}
+                </a>
+              ))}
+            </nav>
+          </FooterColumn>
+
+          {/* Contact */}
+          <FooterColumn title="Contact">
+            <div className="flex flex-col gap-3">
+              <a
+                href={`tel:${contactData.phone.replace(/\s/g, "")}`}
+                className="flex items-center gap-2 font-sans text-[0.8125rem] sm:text-sm"
+                style={{ color: studioTheme.textMuted }}
+              >
+                <Icon name="Phone" className="h-3.5 w-3.5 shrink-0" style={{ color: studioTheme.gold }} />
+                {contactData.phone}
+              </a>
+              <a
+                href={`mailto:${contactData.email}`}
+                className="flex items-center gap-2 font-sans text-[0.8125rem] sm:text-sm"
+                style={{ color: studioTheme.textMuted }}
+              >
+                <Icon name="Mail" className="h-3.5 w-3.5 shrink-0" style={{ color: studioTheme.gold }} />
+                {contactData.email}
+              </a>
+              <span
+                className="flex items-start gap-2 font-sans text-[0.8125rem] sm:text-sm"
+                style={{ color: studioTheme.textMuted }}
+              >
+                <Icon name="MapPin" className="mt-0.5 h-3.5 w-3.5 shrink-0" style={{ color: studioTheme.gold }} />
+                {contactData.address}
+              </span>
+            </div>
+          </FooterColumn>
+
+          {/* Newsletter */}
+          <FooterColumn title="Newsletter">
+            <p
+              className="font-sans text-[0.8125rem] leading-relaxed sm:text-sm"
+              style={{ color: studioTheme.textMuted }}
+            >
+              Stay inspired with our latest projects and insights.
+            </p>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                setEmail("");
+              }}
+              className="flex"
+            >
+              <input
+                type="email"
+                placeholder="Your email address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="min-w-0 flex-1 border bg-transparent px-3 py-2.5 font-sans text-xs outline-none sm:text-sm"
+                style={{
+                  borderColor: studioTheme.borderSubtle,
+                  color: studioTheme.text,
+                }}
+              />
+              <button
+                type="submit"
+                className="flex shrink-0 items-center justify-center px-3 transition-all hover:brightness-110"
+                style={{ backgroundColor: studioTheme.gold, color: studioTheme.bg }}
+                aria-label="Subscribe"
+              >
+                <Icon name="ArrowRight" className="h-4 w-4" strokeWidth={2} />
+              </button>
+            </form>
+          </FooterColumn>
+        </div>
+      </Container>
+
+      {/* Bottom bar */}
+      <div className="border-t" style={{ borderColor: studioTheme.borderSubtle }}>
+        <Container className="flex flex-col items-center justify-between gap-3 py-5 sm:flex-row">
+          <p
+            className="font-sans text-xs"
+            style={{ color: studioTheme.goldMuted }}
+          >
+            &copy; {new Date().getFullYear()} {brand.name}. All rights reserved.
+          </p>
+          <div className="flex gap-4 font-sans text-xs" style={{ color: studioTheme.goldMuted }}>
+            <a href="#" className="transition-colors hover:text-[#c9a962]">
+              Privacy Policy
+            </a>
+            <span className="opacity-40">/</span>
+            <a href="#" className="transition-colors hover:text-[#c9a962]">
+              Terms of Service
+            </a>
+          </div>
+        </Container>
       </div>
     </footer>
   );
-};
+}

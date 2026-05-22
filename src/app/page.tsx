@@ -1,4 +1,3 @@
-import React from "react";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { About } from "@/components/About";
@@ -13,11 +12,8 @@ import { Footer } from "@/components/Footer";
 export default function Home() {
   return (
     <>
-      {/* Floating Header Navbar */}
       <Navbar />
-
-      {/* Main Single Page Content */}
-      <main className="flex flex-col w-full">
+      <main>
         <Hero />
         <About />
         <Services />
@@ -27,8 +23,6 @@ export default function Home() {
         <Process />
         <Contact />
       </main>
-
-      {/* Brand Footer */}
       <Footer />
     </>
   );
